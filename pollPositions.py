@@ -4,36 +4,8 @@ import requests
 from google.transit import gtfs_realtime_pb2
 from datetime import datetime
 from matplotlib.pyplot import pause
-
-
-def tryIntCoerce(x):
-    try:
-        x = int(x)
-    except ValueError as ve:
-        pass
-    return x
-
-
-def getLatLon(pu):
-    return tuple(pu['position'][x] for x in ['latitude', 'longitude'])
-
-
-def getTimestamp(pu):
-    return tryIntCoerce(pu['timestamp'])
-
-
-def getTripId(pu):
-    return pu['trip']['tripId']
-
-
-def getVehicleId(pu):
-    return pu['vehicle']['id']
-
-
-def convertColumnToType(df, colTypeDict):
-    for col, newType in colTypeDict.items():
-        df[col] = df[col].astype(newType)
-    return df
+from .translinkUtilies import tryIntCoerce, convertColumnToType
+from .vehicleInformation import *
 
 
 def pollPositionUpdates(apikey, baseURL):
